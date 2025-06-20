@@ -13,7 +13,9 @@
     <nav>
       <a href="#" class="active">🏠 Dashboard</a>
       <a href="{{ route('pages.datahistory') }}">📊 Riwayat Data</a>
-      <a href="{{ route('pages.control') }}">📐 Kontrol</a>
+      <a  href="{{ route('pages.control') }}">📐 Kontrol</a>
+            <a href="{{ route('pages.camera') }}">📷 Kamera</a>
+
     </nav>
   </div>
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>

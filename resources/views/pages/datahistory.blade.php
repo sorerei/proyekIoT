@@ -10,10 +10,12 @@
   <div class="sidebar" id="sidebar">
   <div class="logo">System Monitoring</div>
   <nav>
-    <a href="{{ route('pages.dashboard') }}">🏠 Dashboard</a>
-    <a href="#" class="active">⏱️ Riwayat Data</a>
-    <a href="{{ route('pages.control') }}">📐 Kontrol</a>
-  </nav>
+      <a href="{{ route('pages.dashboard') }}">🏠 Dashboard</a>
+      <a href="#" class="active">📊 Riwayat Data</a>
+      <a  href="{{ route('pages.control') }}">📐 Kontrol</a>
+            <a href="{{ route('pages.camera') }}">📷 Kamera</a>
+
+    </nav>
 </div>
 
 

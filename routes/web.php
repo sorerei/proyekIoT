@@ -62,4 +62,9 @@ Route::get('/pages/datahistory', [DataHistoryController::class, 'datahistory'])
     ->middleware(['auth', 'verified'])
     ->name('pages.datahistory');
 
+    
+Route::get('/pages/camera', function(){
+    return view('/pages/camera');
+})->middleware(['auth', 'verified'])->name('pages.camera');
+
 require __DIR__.'/auth.php';
