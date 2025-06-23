@@ -53,12 +53,12 @@
       <input type="date" name="end_date" value="{{ request('end_date') }}">
     </div>
     <div class="filter-group">
-      <button type="button">Tekanan</button>
-      <input type="text" name="beban" placeholder="Tekanan" value="{{ request('beban') }}">
+      <button type="button">Medan Magnet</button>
+      <input type="text" name="medan_magnet"  value="{{ request('medan_magnet') }}">
     </div>
     <div class="filter-group">
       <button type="button">Kecepatan</button>
-      <input type="text" name="kecepatan" placeholder="RPM" value="{{ request('kecepatan') }}">
+      <input type="text" name="kecepatan" value="{{ request('kecepatan') }}">
     </div>
   </div>
   <div class="filter-actions">
@@ -74,18 +74,22 @@
     <thead>
       <tr>
         <th>Waktu</th>
-        <th>Tekanan (Bar)</th>
-        <th>Kecepatan Putar (RPM)</th>
-        <th>Status</th>
+        <th>Medang Magnet</th>
+        <th>Kecepatan</th>
+        <th>Roll</th>
+        <th>Pitch</th>
+        <th>Yaw</th>
       </tr>
     </thead>
     <tbody>
       @forelse ($data as $row)
         <tr>
           <td>{{ \Carbon\Carbon::parse($row->created_at)->format('Y-m-d H:i:s') }}</td>
-          <td>{{ number_format((float)$row->beban, 1, ',', '.') }}</td>
+          <td>{{ number_format((float)$row->medan_magnet, 1, ',', '.') }}</td>
           <td>{{ $row->kecepatan }}</td>
-          <td>{{ $row->status_sistem }}</td>
+          <td>{{ $row->roll }}</td>
+          <td>{{ $row->pitch }}</td>
+          <td>{{ $row->yaw }}</td>
         </tr>
       @empty
         <tr>

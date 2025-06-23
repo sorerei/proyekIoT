@@ -13,12 +13,24 @@ class DataHistoryController extends Controller
             $query->whereBetween('created_at', [$request->start_date, $request->end_date]);
         }
 
-        if ($request->filled('beban')) {
-            $query->where('beban', $request->beban);
+        if ($request->filled('medan_magnet')) {
+            $query->where('medan_magnet', $request->medan_magnet);
         }
 
         if ($request->filled('kecepatan')) {
             $query->where('kecepatan', $request->kecepatan);
+        }
+
+        if ($request->filled('roll')) {
+            $query->where('roll', $request->roll);
+        }
+
+        if ($request->filled('pitch')) {
+            $query->where('pitch', $request->pitch);
+        }
+
+        if ($request->filled('yaw')) {
+            $query->where('yaw', $request->yaw);
         }
 
         $data = $query->orderBy('created_at', 'desc')->paginate(10)->appends($request->query());
