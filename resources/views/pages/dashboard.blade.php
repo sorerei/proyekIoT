@@ -8,6 +8,9 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  <div class="layout">
+
+  </div>
   <div class="sidebar" id="sidebar">
     <div class="logo">System Monitoring</div>
     <nav>
@@ -39,15 +42,22 @@
     <h1>Dashboard</h1>
 
     <div class="top-cards">
-      <div class="card dark">Status Sistem<br><strong id="status-sistem">{{ $data->status_sistem ?? '-' }}</strong></div>
-      <div class="card lightblue">Posisi Sumbu<br><strong id="posisi-sumbu">{{ $data->posisi_sumbu ?? '-' }}</strong></div>
-      <div class="card dark">Kecepatan<br><strong id="kecepatan">{{ $data->kecepatan ?? '-' }}</strong></div>
+      <div class="card dark">X<br><strong id="roll">{{ $data->roll ?? '-' }}</strong></div>
+      <div class="card lightblue">Y<br><strong id="pitch">{{ $data->pitch ?? '-' }}</strong></div>
+      <div class="card dark">Z<br><strong id="yaw">{{ $data->yaw ?? '-' }}</strong></div>
     </div>
 
-    <div class="content-layout">
       <div class="side-data">
-        <div class="card right">Beban<br><strong id="beban">{{ $data->beban ?? '-' }}</strong></div>
+
+        <div class="chart-container">
+          <div class="chart-wrapper">
+              <canvas id="sumbuChart"></canvas>
+          </div>
+      </div>
+        <div class="card right">Medan magnet<br><strong id="beban">{{ $data->medan_magnet ?? '-' }}</strong></div>
         <div class="card right lightblue">Kemiringan<br><strong id="kemiringan">{{ $data->kemiringan ?? '-' }}</strong></div>
+                <div class="card right lightblue">Kecepatan<br><strong id="kecepatan">{{ $data->kecepatan ?? '-' }}</strong></div>
+
       </div>
     </div>
   </div>

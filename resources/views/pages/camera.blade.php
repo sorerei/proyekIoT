@@ -38,7 +38,7 @@
     </div>
       <h1>Camera</h1>
     <div class="camera">
-        <img src="http://192.168.100.169:8080/?action=stream" alt="Live Camera Feed">
+        <img src="http://192.168.205.146:8080/?action=stream" alt="Live Camera Feed">
     </div>
 
       <script src="{{ asset('js/camera.js') }}"></script>

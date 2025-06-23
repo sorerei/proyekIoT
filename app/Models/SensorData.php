@@ -17,6 +17,9 @@ class SensorData extends Model
         'posisi_sumbu',
         'kecepatan',
         'beban',
-        'kemiringan'
+        'kemiringan',
+        'roll',
+        'pitch',
+        'yaw'
     ];
 }

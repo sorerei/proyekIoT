@@ -28,22 +28,119 @@ window.onclick = function(event) {
     document.getElementById("dropdown-menu").style.display = "none";
   }
 };
+let sumbuChart;
 
+function renderSumbuChart(data) {
+  const ctx = document.getElementById('sumbuChart').getContext('2d');
 
-function fetchData() {
-      $.get('/api/dashboard-data', function(data) {
-        if (data) {
-          $('#status-sistem').text(data.status_sistem || '-');
-          $('#posisi-sumbu').text(data.posisi_sumbu || '-');
-          $('#kecepatan').text(data.kecepatan || '-');
-          $('#beban').text(data.beban || '-');
-          $('#kemiringan').text(data.kemiringan || '-');
+  if (sumbuChart) sumbuChart.destroy();
+
+  sumbuChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: data.labels,
+      datasets: [
+        {
+          label: 'Roll (X)',
+          data: data.roll,
+          borderColor: '#FF6384',
+          fill: false,
+          tension: 0.4
+        },
+        {
+          label: 'Pitch (Y)',
+          data: data.pitch,
+          borderColor: '#36A2EB',
+          fill: false,
+          tension: 0.4
+        },
+        {
+          label: 'Yaw (Z)',
+          data: data.yaw,
+          borderColor: '#FFCE56',
+          fill: false,
+          tension: 0.4
         }
-      });
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: {
+            color: 'white' // Warna label legend
+          }
+        },
+        title: {
+          display: false
+        },
+        tooltip: {
+          bodyColor: 'white',
+          titleColor: 'white'
+        }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: 'white' // Warna angka di sumbu X
+          },
+          title: {
+            display: true,
+            text: 'Waktu',
+            color: 'white' // Warna judul sumbu X
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)' // Warna garis grid X
+          }
+        },
+        y: {
+          ticks: {
+            color: 'white' // Warna angka di sumbu Y
+          },
+          title: {
+            display: true,
+            text: 'Nilai Sumbu',
+            color: 'white' // Warna judul sumbu Y
+          },
+          grid: {
+            color: 'rgba(255, 255, 255, 0.2)' // Warna garis grid Y
+          }
+        }
+      }
     }
+  });
+}
 
-    // Fetch data setiap 5 detik
-    setInterval(fetchData, 5000);
 
-    // Fetch pertama kali saat halaman load
-    fetchData();
+function loadSumbuChartData() {
+  fetch('/api/sumbu-chart-data')
+    .then(response => response.json())
+    .then(data => renderSumbuChart(data));
+}
+
+
+// ===================
+// Fetch Realtime Data
+// ===================
+function fetchData() {
+  $.get('/api/dashboard-data', function(data) {
+    if (data) {
+      // Update elemen statis
+      $('#status').text(data.status_sistem || '-');
+      $('#kecepatan').text(data.kecepatan || '-');
+      $('#beban').text(data.beban || '-');
+      $('#kemiringan').text(data.kemiringan || '-');
+
+      // Update chart dengan 50 data historis
+      const labels = data.history.map(item => item.created_at);
+      const rollData = data.history.map(item => item.roll);
+      const pitchData = data.history.map(item => item.pitch);
+      const yawData = data.history.map(item => item.yaw);
+    }
+  });
+}
+
+loadSumbuChartData();
+setInterval(loadSumbuChartData, 10000);
+  fetchData();
+  setInterval(fetchData, 5000); // per 5 detik

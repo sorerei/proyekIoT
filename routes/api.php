@@ -24,14 +24,30 @@ Route::get('/motor-control', function(Request $request){
     return response()->json(['status'=>'Motor bergerak ke $direction']);
 });
 
-Route::post('/send-data', function(Request $request){
+Route::post('/send-data', function(Request $request) {
     $data = SensorData::create([
         'status_sistem' => $request->status_sistem,
         'posisi_sumbu' => $request->posisi_sumbu,
         'kecepatan' => $request->kecepatan,
         'beban' => $request->beban,
         'kemiringan' => $request->kemiringan,
+        'roll' => $request->roll,
+        'pitch' => $request->pitch,
+        'yaw' => $request->yaw
     ]);
 
     return response()->json(['message' => 'Data received', 'data' => $data], 201);
+});
+
+Route::get('/sumbu-chart-data', function () {
+    $data = SensorData::orderBy('created_at', 'desc')->take(20)->get(['created_at', 'roll', 'pitch', 'yaw'])->reverse();
+
+    return response()->json([
+        'labels' => $data->pluck('created_at')->map(function ($time) {
+            return \Carbon\Carbon::parse($time)->format('H:i:s');
+        }),
+        'roll' => $data->pluck('roll'),
+        'pitch' => $data->pluck('pitch'),
+        'yaw' => $data->pluck('yaw'),
+    ]);
 });

@@ -13,6 +13,10 @@ body {
 }
 
 .sidebar {
+    position: fixed;
+    height: 100vh; /* sidebar penuh tinggi layar */
+   z-index: 999;
+  overflow-y: auto;   
   width: 220px;
   background: #d6e8f5;
   padding: 20px;
@@ -46,9 +50,13 @@ body {
 }
 
 .main {
+    margin-left: 220px; /* sama seperti lebar sidebar */
+
   flex: 1;
   padding: 30px;
   background: #f6fbff;
+    min-height: 100vh;
+
 }
 
 .topbar {
@@ -94,9 +102,25 @@ h1 {
 
 .chart-container {
   background: #28618c;
-  padding: 20px;
   border-radius: 12px;
-  flex: 3;
+  padding: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.chart-wrapper canvas {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .side-data {
