@@ -33,7 +33,8 @@ Route::post('/send-data', function(Request $request) {
         'kemiringan' => $request->kemiringan,
         'roll' => $request->roll,
         'pitch' => $request->pitch,
-        'yaw' => $request->yaw
+        'yaw' => $request->yaw,
+        'medan_magnet' => $request->medan_magnet
     ]);
 
     return response()->json(['message' => 'Data received', 'data' => $data], 201);

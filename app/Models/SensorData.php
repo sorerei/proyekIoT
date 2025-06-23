@@ -19,7 +19,8 @@ class SensorData extends Model
         'beban',
         'kemiringan',
         'roll',
-        'pitch',
-        'yaw'
+        'pitch',    
+        'yaw',
+        'medan_magnet'
     ];
 }

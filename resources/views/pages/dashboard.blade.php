@@ -54,7 +54,7 @@
               <canvas id="sumbuChart"></canvas>
           </div>
       </div>
-        <div class="card right">Medan magnet<br><strong id="beban">{{ $data->medan_magnet ?? '-' }}</strong></div>
+        <div class="card right">Medan Magnet<br><strong id="medan_magnet">{{ $data->medan_magnet ?? '-' }}</strong></div>
         <div class="card right lightblue">Kemiringan<br><strong id="kemiringan">{{ $data->kemiringan ?? '-' }}</strong></div>
                 <div class="card right lightblue">Kecepatan<br><strong id="kecepatan">{{ $data->kecepatan ?? '-' }}</strong></div>
 

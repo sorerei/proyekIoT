@@ -130,6 +130,7 @@ function fetchData() {
       $('#kecepatan').text(data.kecepatan || '-');
       $('#beban').text(data.beban || '-');
       $('#kemiringan').text(data.kemiringan || '-');
+      $('#medan_magnet').text(data.medan_magnet || '-');
 
       // Update chart dengan 50 data historis
       const labels = data.history.map(item => item.created_at);
