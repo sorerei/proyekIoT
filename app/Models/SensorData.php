@@ -13,8 +13,6 @@ class SensorData extends Model
 
     // Kolom-kolom yang bisa diisi secara mass-assignment
     protected $fillable = [
-        'status_sistem',
-        'posisi_sumbu',
         'kecepatan',
         'beban',
         'kemiringan',

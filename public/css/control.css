@@ -120,7 +120,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at bottom right, #e7f4ff 20%, #f4faff 70%);
   padding: 50px 20px;
 }
 

@@ -14,7 +14,7 @@ import axios from 'axios';
 /* ------------------------------ SCENE & CAMERA */
 const canvas = document.getElementById('sceneCanvas');
 const scene  = new THREE.Scene();
-scene.background = new THREE.Color(0x222222);
+scene.background = new THREE.Color("#f4faff");
 
 const camera = new THREE.PerspectiveCamera(
   45,
@@ -41,7 +41,8 @@ controls.enableDamping   = true;
 controls.dampingFactor   = 0.12;
 controls.minDistance     = 2;
 controls.maxDistance     = 10;
-controls.maxPolarAngle   = Math.PI / 2;
+controls.minPolarAngle =
+controls.maxPolarAngle   = Math.PI;
 
 /* ------------------------------ LOAD MODEL */
 let model = null;
@@ -54,12 +55,15 @@ model = gltf.scene;
   model.scale.set(1, 1, 1);
 
   // Reset rotasi agar tidak ada tambahan rotasi membingungkan
-  model.rotation.set(5, 0, 0);
+  model.rotation.set(0, 0, 0);
 
   scene.add(model);
 }, undefined, error => {
   console.error('GLB load error:', error);
 });
+
+setInterval(updateModelFromAPI, 500); // fetch setiap 0.5 detik
+
 
 /* ------------------------------ UI BUTTONS */
 let zoomDir = 1;
@@ -81,6 +85,22 @@ document.querySelectorAll('.btn').forEach(btn => {
   });
 });
 
+function updateModelFromAPI() {
+  if (!model) return;
+
+  axios.get('/api/rotation') 
+    .then(response => {
+      const { x, y, z } = response.data;
+
+      // Konversi derajat ke radian
+      model.rotation.x = THREE.MathUtils.degToRad(x);
+      model.rotation.y = THREE.MathUtils.degToRad(y);
+      model.rotation.z = THREE.MathUtils.degToRad(z);
+    })
+    .catch(console.warn);
+}
+
+
 /* ------------------------------ SYNC TO BACKEND */
 function saveState(obj) {
   axios.post('/api/control', {
@@ -96,6 +116,7 @@ function animate() {
   requestAnimationFrame(animate);
   controls.update();
   renderer.render(scene, camera);
+  
 }
 animate();
 

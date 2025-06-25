@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\SensorData;
+use App\Http\Controllers\SensorDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +16,8 @@ use App\Models\SensorData;
 |
 */
 
+Route::get('/rotation', [SensorDataController::class, 'getLatestRotation']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -26,8 +29,6 @@ Route::get('/motor-control', function(Request $request){
 
 Route::post('/send-data', function(Request $request) {
     $data = SensorData::create([
-        'status_sistem' => $request->status_sistem,
-        'posisi_sumbu' => $request->posisi_sumbu,
         'kecepatan' => $request->kecepatan,
         'beban' => $request->beban,
         'kemiringan' => $request->kemiringan,
