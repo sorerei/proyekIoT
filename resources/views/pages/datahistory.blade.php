@@ -53,12 +53,40 @@
       <input type="date" name="end_date" value="{{ request('end_date') }}">
     </div>
     <div class="filter-group">
-      <button type="button">Medan Magnet</button>
-      <input type="text" name="medan_magnet"  value="{{ request('medan_magnet') }}">
+      <button type="button">Roll</button>
+      <input type="text" name="roll"  value="{{ request('roll') }}">
     </div>
     <div class="filter-group">
-      <button type="button">Kecepatan</button>
-      <input type="text" name="kecepatan" value="{{ request('kecepatan') }}">
+      <button type="button">Pitch</button>
+      <input type="text" name="pitch"  value="{{ request('pitch') }}">
+    </div>
+    <div class="filter-group">
+      <button type="button">Yaw</button>
+      <input type="text" name="yaw"  value="{{ request('yaw') }}">
+    </div>
+    <div class="filter-group">
+      <button type="button">X Magnet</button>
+      <input type="text" name="xmagnet"  value="{{ request('xmagnet') }}">
+    </div>
+    <div class="filter-group">
+      <button type="button">Y Magnet</button>
+      <input type="text" name="ymagnet"  value="{{ request('ymagnet') }}">
+    </div>
+    <div class="filter-group">
+      <button type="button">Z Magnet</button>
+      <input type="text" name="zmagnet"  value="{{ request('zmagnet') }}">
+    </div>
+    <div class="filter-group">
+      <button type="button">X Accel</button>
+      <input type="text" name="xaccel"  value="{{ request('xaccel') }}">
+</div>
+    <div class="filter-group">
+      <button type="button">Y Accel</button>
+      <input type="text" name="yaccel"  value="{{ request('yaccel') }}">
+    </div>
+    <div class="filter-group">
+      <button type="button">Z Accel</button>
+      <input type="text" name="zaccel"  value="{{ request('zaccel') }}">
     </div>
   </div>
   <div class="filter-actions">
@@ -74,22 +102,30 @@
     <thead>
       <tr>
         <th>Waktu</th>
-        <th>Medan Magnet</th>
-        <th>Kecepatan</th>
         <th>Roll</th>
         <th>Pitch</th>
         <th>Yaw</th>
+        <th>X Magnet</th>
+        <th>Y Magnet</th>
+        <th>Z Magnet</th>
+        <th>X Accel</th>
+        <th>Y Accel</th>
+        <th>Z Accel</th>
       </tr>
     </thead>
     <tbody>
       @forelse ($data as $row)
         <tr>
           <td>{{ \Carbon\Carbon::parse($row->created_at)->format('Y-m-d H:i:s') }}</td>
-          <td>{{ number_format((float)$row->medan_magnet, 1, ',', '.') }}</td>
-          <td>{{ $row->kecepatan }}</td>
           <td>{{ $row->roll }}</td>
           <td>{{ $row->pitch }}</td>
           <td>{{ $row->yaw }}</td>
+          <td>{{ $row->xmagnet }}</td>
+          <td>{{ $row->ymagnet }}</td>
+          <td>{{ $row->zmagnet }}</td>
+          <td>{{ $row->xaccel }}</td>
+          <td>{{ $row->yaccel }}</td>
+          <td>{{ $row->zaccel }}</td>
         </tr>
       @empty
         <tr>
