@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Kontrol | Monitoring Dashboard</title>
+  <title>3D Control</title>
   <link rel="stylesheet" href="{{ asset('css/control.css') }}" />
   @vite(['resources/js/app.js'])
 
@@ -45,7 +45,7 @@
     <div class="">
         <!-- Kontainer model 3D dengan latar belakang gelap dan sudut membulat -->
         <div class="kontrol-container">
-            <h2 class="">Kontrol Model 3D</h2>
+            <h2 class="">Model 3D</h2>
             <!-- Elemen canvas untuk rendering 3D Three.js -->
             <canvas id="sceneCanvas" class="model-canvas"></canvas>
         </div>
