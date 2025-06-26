@@ -29,20 +29,22 @@ Route::get('/motor-control', function(Request $request){
 
 Route::post('/send-data', function(Request $request) {
     $data = SensorData::create([
-        'kecepatan' => $request->kecepatan,
-        'beban' => $request->beban,
-        'kemiringan' => $request->kemiringan,
         'roll' => $request->roll,
         'pitch' => $request->pitch,
         'yaw' => $request->yaw,
-        'medan_magnet' => $request->medan_magnet
+        'xaccel' => $request->xaccel,
+        'yaccel' => $request->yaccel,
+        'zaccel' => $request->zaccel,
+        'xmagnet' => $request->xmagnet,
+        'ymagnet' => $request->ymagnet,
+        'zmagnet' => $request->zmagnet,
     ]);
 
     return response()->json(['message' => 'Data received', 'data' => $data], 201);
 });
 
 Route::get('/sumbu-chart-data', function () {
-    $data = SensorData::orderBy('created_at', 'desc')->take(20)->get(['created_at', 'roll', 'pitch', 'yaw'])->reverse();
+    $data = SensorData::orderBy('created_at', 'desc')->take(20)->get(['created_at', 'roll', 'pitch', 'yaw', 'xmagnet', 'ymagnet', 'zmagnet','xaccel', 'yaccel', 'zaccel',])->reverse();
 
     return response()->json([
         'labels' => $data->pluck('created_at')->map(function ($time) {
@@ -51,5 +53,13 @@ Route::get('/sumbu-chart-data', function () {
         'roll' => $data->pluck('roll'),
         'pitch' => $data->pluck('pitch'),
         'yaw' => $data->pluck('yaw'),
+
+        'xmagnet' => $data->pluck('xmagnet'),
+        'ymagnet' => $data->pluck('ymagnet'),
+        'zmagnet' => $data->pluck('zmagnet'),
+
+        'xaccel' => $data->pluck('xaccel'),
+        'yaccel' => $data->pluck('yaccel'),
+        'zaccel' => $data->pluck('zaccel')
     ]);
 });

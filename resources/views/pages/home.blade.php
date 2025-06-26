@@ -49,7 +49,7 @@
       </div>
 
       <div class="image-area">
-        <img src="{{ Vite::asset('resources/img/imageHome1.jpg') }}" alt="Air Bearing" />
+        <img src="{{ asset('img/imageHome1.jpg') }}" alt="Air Bearing" />
       </div>
     </section>
     <div class="circle-decor"></div>

@@ -42,9 +42,9 @@
     <h1>Dashboard</h1>
 
     <div class="top-cards">
-      <div class="card dark">X<br><strong id="roll">{{ $data->roll ?? '-' }}</strong></div>
-      <div class="card lightblue">Y<br><strong id="pitch">{{ $data->pitch ?? '-' }}</strong></div>
-      <div class="card dark">Z<br><strong id="yaw">{{ $data->yaw ?? '-' }}</strong></div>
+      <div class="card dark">Data RPY<br>
+        <p>X (Raw) : <strong id="roll">{{ $data->roll ?? '-' }}</strong>, Y (Pitch) : <strong id="pitch">{{ $data->pitch ?? '-' }}</strong>,  Z (Yaw) : <strong id="yaw">{{ $data->yaw ?? '-' }}</strong></p>
+      </div>
     </div>
 
       <div class="side-data">
@@ -53,16 +53,39 @@
           <div class="chart-wrapper">
               <canvas id="sumbuChart"></canvas>
           </div>
+        </div>
       </div>
-        <div class="card right">Medan Magnet<br><strong id="medan_magnet">{{ $data->medan_magnet ?? '-' }}</strong></div>
-        <div class="card right lightblue">Kemiringan<br><strong id="kemiringan">{{ $data->kemiringan ?? '-' }}</strong></div>
-                <div class="card right lightblue">Kecepatan<br><strong id="kecepatan">{{ $data->kecepatan ?? '-' }}</strong></div>
+      <br></br>
+      <div class="top-cards">
+          <div class="card dark">Medan Magnet<br>
+                    <p>X : <strong id="xmagnet">{{ $data->xmagnet ?? '-' }}</strong>, Y : <strong id="ymagnet">{{ $data->ymagnet ?? '-' }}</strong>,  Z : <strong id="zmagnet">{{ $data->zmagnet ?? '-' }}</strong></p>
 
+          </div>
       </div>
-    </div>
+
+      <div class="side-data">
+        <div class="chart-container">
+          <div class="chart-wrapper">
+              <canvas id="sumbu1Chart"></canvas>
+          </div>
+      </div>
+      <br></br>
+      <div class="top-cards">
+          <div class="card dark">Kecepatan<br>
+                    <p>X : <strong id="xaccel">{{ $data->xaccel ?? '-' }}</strong>, Y : <strong id="yaccel">{{ $data->yaccel ?? '-' }}</strong>,  Z : <strong id="zaccel">{{ $data->zaccel ?? '-' }}</strong></p>
+
+          </div>
+      </div>
+
+      <div class="side-data">
+        <div class="chart-container">
+          <div class="chart-wrapper">
+              <canvas id="sumbu2Chart"></canvas>
+          </div>  
+      </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script src="{{ asset('js/dashboard.js') }}"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>

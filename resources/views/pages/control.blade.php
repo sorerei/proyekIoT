@@ -48,11 +48,6 @@
             <h2 class="">Kontrol Model 3D</h2>
             <!-- Elemen canvas untuk rendering 3D Three.js -->
             <canvas id="sceneCanvas" class="model-canvas"></canvas>
-            <!-- Kontrol untuk interaksi model -->
-            <div class="">
-                <button class="btn" data-action="rotate">Putar Model</button>
-                <button class="btn" data-action="zoom">Zoom In/Out</button>
-            </div>
         </div>
     </div>
     <script src="{{ asset('js/control.js') }}"></script>

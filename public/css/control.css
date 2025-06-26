@@ -219,9 +219,9 @@ body {
 .model-canvas {
   width: 600px;
   height: 400px;
-  background-color: #1c1c1c;
   border-radius: 8px;
   margin: 20px 0;
+  display: block;
 }
 
 .btn{

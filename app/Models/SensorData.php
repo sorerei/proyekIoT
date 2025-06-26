@@ -13,12 +13,14 @@ class SensorData extends Model
 
     // Kolom-kolom yang bisa diisi secara mass-assignment
     protected $fillable = [
-        'kecepatan',
-        'beban',
-        'kemiringan',
         'roll',
         'pitch',    
         'yaw',
-        'medan_magnet'
+        'xmagnet',
+        'ymagnet',
+        'zmagnet',
+        'xaccel',
+        'yaccel',
+        'zaccel',
     ];
 }

@@ -74,7 +74,7 @@
     <thead>
       <tr>
         <th>Waktu</th>
-        <th>Medang Magnet</th>
+        <th>Medan Magnet</th>
         <th>Kecepatan</th>
         <th>Roll</th>
         <th>Pitch</th>

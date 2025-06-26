@@ -38,9 +38,41 @@
     </div>
       <h1>Camera</h1>
     <div class="camera">
-        <img src="http://192.168.137.217:8080/?action=stream" alt="Live Camera Feed">
-    </div>
+    <div style="position: relative; width: 100%; max-width: 640px;">
+  <img id="imgA" style="position: absolute; width: 100%;" />
+  <img id="imgB" style="position: absolute; width: 100%;" />
+</div>
+  </div>
+<script>
+    const imgA = document.getElementById('imgA');
+    const imgB = document.getElementById('imgB');
 
-      <script src="{{ asset('js/camera.js') }}"></script>
+    let current = imgA;
+    let buffer = imgB;
+
+    function preloadAndSwap() {
+        const nextSrc = "{{ url('/camera-snapshot') }}" + "?t=" + new Date().getTime();
+        buffer.src = nextSrc;
+
+        buffer.onload = () => {
+            // Swap posisi z-index
+            buffer.style.zIndex = 1;
+            current.style.zIndex = 0;
+
+            // Swap references
+            [current, buffer] = [buffer, current];
+
+            // Load next frame
+            requestAnimationFrame(preloadAndSwap);
+        };
+
+        buffer.onerror = () => {
+            setTimeout(preloadAndSwap, 500);
+        };
+    }
+
+    // Start
+    preloadAndSwap();
+</script>      <script src="{{ asset('js/camera.js') }}"></script>
 </body>
 </html>

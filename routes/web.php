@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileUpdateController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataHistoryController;
 use App\Http\Controllers\KontrolController;
+use Illuminate\Support\Facades\Http;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,5 +67,17 @@ Route::get('/pages/datahistory', [DataHistoryController::class, 'datahistory'])
 Route::get('/pages/camera', function(){
     return view('/pages/camera');
 })->middleware(['auth', 'verified'])->name('pages.camera');
+
+Route::get('/camera-snapshot', function () {
+    try {
+        $response = Http::timeout(2)->get('http://192.168.255.146:8080/?action=snapshot');
+
+        return response($response->body(), 200)
+            ->header('Content-Type', 'image/jpeg')
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate');
+    } catch (\Exception $e) {
+        abort(504, 'Snapshot timeout');
+    }
+});
 
 require __DIR__.'/auth.php';

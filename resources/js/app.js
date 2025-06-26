@@ -1,3 +1,24 @@
+    function toggleDropdown() {
+      document.querySelector('.user-dropdown').classList.toggle('active');
+    }
+
+     
+  function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+
+  sidebar.classList.toggle("active");
+  overlay.style.display = sidebar.classList.contains("active") ? "block" : "none";
+}
+
+function closeSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("overlay");
+
+  sidebar.classList.remove("active");
+  overlay.style.display = "none";
+}
+
 import './bootstrap';
 
 import Alpine from 'alpinejs';
@@ -41,28 +62,37 @@ controls.enableDamping   = true;
 controls.dampingFactor   = 0.12;
 controls.minDistance     = 2;
 controls.maxDistance     = 10;
-controls.minPolarAngle =
+controls.minPolarAngle = 0;
 controls.maxPolarAngle   = Math.PI;
 
 /* ------------------------------ LOAD MODEL */
 let model = null;
 const loader = new GLTFLoader();
 
-loader.load('/models/3DAlat.glb', gltf => {
-model = gltf.scene;
+loader.load('/models/3DAlat.glb', function (gltf)  {
+  model = gltf.scene;
 
   // Atur skala mirror terhadap Y agar orientasi cocok
   model.scale.set(1, 1, 1);
 
   // Reset rotasi agar tidak ada tambahan rotasi membingungkan
   model.rotation.set(0, 0, 0);
-
+  
+    model.traverse(child => {
+    if (child.isMesh) {
+      child.castShadow = false;         // Jika tidak perlu bayangan
+      child.receiveShadow = false;
+      child.frustumCulled = true;       // Render hanya jika di dalam view kamera
+      child.geometry.computeBoundingSphere(); // Optional: bantu culling lebih akurat
+    }
+  });
+  
   scene.add(model);
 }, undefined, error => {
   console.error('GLB load error:', error);
 });
 
-setInterval(updateModelFromAPI, 500); // fetch setiap 0.5 detik
+setInterval(updateModelFromAPI, 1000); // fetch setiap 1 detik
 
 
 /* ------------------------------ UI BUTTONS */
@@ -85,19 +115,20 @@ document.querySelectorAll('.btn').forEach(btn => {
   });
 });
 
+let targetRotation = { x: 0, y: 0, z: 0 };
+
 function updateModelFromAPI() {
   if (!model) return;
 
   axios.get('/api/rotation') 
     .then(response => {
       const { x, y, z } = response.data;
-
-      // Konversi derajat ke radian
-      model.rotation.x = THREE.MathUtils.degToRad(x);
-      model.rotation.y = THREE.MathUtils.degToRad(y);
-      model.rotation.z = THREE.MathUtils.degToRad(z);
+      targetRotation.x = THREE.MathUtils.degToRad(x);
+      targetRotation.y = THREE.MathUtils.degToRad(y);
+      targetRotation.z = THREE.MathUtils.degToRad(z);
     })
     .catch(console.warn);
+}
 }
 
 
@@ -112,8 +143,21 @@ function saveState(obj) {
 }
 
 /* ------------------------------ ANIMATION LOOP */
+const clock = new THREE.Clock();
+
 function animate() {
   requestAnimationFrame(animate);
+    const delta = clock.getDelta(); // waktu antar frame (dalam detik)
+
+
+   // Interpolasi rotasi agar smooth
+  if (model) {
+        const lerpFactor = 5 * delta; // kecepatan interpolasi (semakin besar = makin cepat)
+    model.rotation.x += (targetRotation.x - model.rotation.x) * lerpFactor;
+    model.rotation.y += (targetRotation.y - model.rotation.y) * lerpFactor;
+    model.rotation.z += (targetRotation.z - model.rotation.z) * lerpFactor;
+  }
+
   controls.update();
   renderer.render(scene, camera);
   
