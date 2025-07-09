@@ -129,7 +129,7 @@ function updateModelFromAPI() {
     })
     .catch(console.warn);
 }
-}
+
 
 
 /* ------------------------------ SYNC TO BACKEND */
