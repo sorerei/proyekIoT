@@ -25,3 +25,15 @@ function closeSidebar() {
   sidebar.classList.remove("active");
   overlay.style.display = "none";
 }
+
+$(document).ready(function() {
+  function refreshTable() {
+    $.get(window.location.href, function(response) {
+      // Ambil isi tabel dari response HTML
+      const newTable = $(response).find('.table-container').html();
+      $('.table-container').html(newTable);
+    });
+  }
+
+  setInterval(refreshTable, 0.5); // Refresh tiap 0.5 detik
+});
