@@ -70,7 +70,7 @@ Route::get('/pages/camera', function(){
 
 Route::get('/camera-snapshot', function () {
     try {
-        $response = Http::timeout(2)->get('http://192.168.255.146:8080/?action=snapshot');
+        $response = Http::timeout(2)->get('http://10.17.83.146:8080/?action=snapshot');
 
         return response($response->body(), 200)
             ->header('Content-Type', 'image/jpeg')
