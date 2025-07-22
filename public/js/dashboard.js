@@ -65,6 +65,7 @@ function renderSumbuChart(data) {
     },
     options: {
       responsive: true,
+      animation: false,
       plugins: {
         legend: {
           labels: {
@@ -147,6 +148,7 @@ function renderSumbu1Chart(data) {
     },
     options: {
       responsive: true,
+      animation: false,
       plugins: {
         legend: {
           labels: {
@@ -223,6 +225,7 @@ function renderSumbu2Chart(data) {
     },
     options: {
       responsive: true,
+      animation: false,
       plugins: {
         legend: {
           labels: {
@@ -267,7 +270,8 @@ function renderSumbu2Chart(data) {
 function loadSumbuChartData() {
   fetch('/api/sumbu-chart-data')
     .then(response => response.json())
-    .then(data => {renderSumbuChart(data);       renderSumbu1Chart(data);
+    .then(data => {renderSumbuChart(data);       
+      renderSumbu1Chart(data);
       renderSumbu2Chart(data);});
 }
 
@@ -300,7 +304,7 @@ function fetchData() {
 }
 
 loadSumbuChartData();
-setInterval(loadSumbuChartData, 3000);
+setInterval(loadSumbuChartData, 500);
 
 fetchData();
-setInterval(fetchData, 3000); // per 5 detik
+setInterval(fetchData, 500);
