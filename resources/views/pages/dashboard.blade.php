@@ -47,42 +47,13 @@
       </div>
     </div>
 
-      <div class="side-data">
-
-        <div class="chart-container">
-          <div class="chart-wrapper">
-              <canvas id="sumbuChart"></canvas>
-          </div>
+    <div class="side-data">
+      <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="sumbuChart"></canvas>
         </div>
       </div>
-      <br></br>
-      <div class="top-cards">
-          <div class="card dark">Medan Magnet<br>
-                    <p>X : <strong id="xmagnet">{{ $data->xmagnet ?? '-' }}</strong>, Y : <strong id="ymagnet">{{ $data->ymagnet ?? '-' }}</strong>,  Z : <strong id="zmagnet">{{ $data->zmagnet ?? '-' }}</strong></p>
-
-          </div>
-      </div>
-
-      <div class="side-data">
-        <div class="chart-container">
-          <div class="chart-wrapper">
-              <canvas id="sumbu1Chart"></canvas>
-          </div>
-      </div>
-      <br></br>
-      <div class="top-cards">
-          <div class="card dark">Kecepatan<br>
-                    <p>X : <strong id="xaccel">{{ $data->xaccel ?? '-' }}</strong>, Y : <strong id="yaccel">{{ $data->yaccel ?? '-' }}</strong>,  Z : <strong id="zaccel">{{ $data->zaccel ?? '-' }}</strong></p>
-
-          </div>
-      </div>
-
-      <div class="side-data">
-        <div class="chart-container">
-          <div class="chart-wrapper">
-              <canvas id="sumbu2Chart"></canvas>
-          </div>  
-      </div>
+    </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

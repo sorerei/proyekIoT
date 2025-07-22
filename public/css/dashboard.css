@@ -109,6 +109,7 @@ h1 {
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  margin-bottom: 30px;
 }
 
 .chart-wrapper {
