@@ -45,37 +45,6 @@
         <img id="imgB" style="position: absolute; width: 100%;" />
       </div>
     </div>
-    <script>
-      const imgA = document.getElementById('imgA');
-      const imgB = document.getElementById('imgB');
-
-      let current = imgA;
-      let buffer = imgB;
-
-      function preloadAndSwap() {
-        const nextSrc = "{{ url('/camera-snapshot') }}" + "?t=" + new Date().getTime();
-        buffer.src = nextSrc;
-
-        buffer.onload = () => {
-          // Swap posisi z-index
-          buffer.style.zIndex = 1;
-          current.style.zIndex = 0;
-
-          // Swap references
-          [current, buffer] = [buffer, current];
-
-          // Load next frame
-          requestAnimationFrame(preloadAndSwap);
-        };
-
-        buffer.onerror = () => {
-          setTimeout(preloadAndSwap, 500);
-        };
-      }
-
-      // Start
-      preloadAndSwap();
-    </script>
     <script src="{{ asset('js/camera.js') }}"></script>
 </body>
 
