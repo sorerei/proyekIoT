@@ -1,0 +1,245 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background: #f1f7fc;
+  color: #333;
+}
+
+.sidebar {
+    position: fixed;
+    height: 100vh; /* sidebar penuh tinggi layar */
+   z-index: 999;
+  overflow-y: auto;   
+  width: 220px;
+  background: #d6e8f5;
+  padding: 20px;
+}
+
+.sidebar .logo {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.sidebar .status {
+  font-size: 14px;
+  margin-bottom: 30px;
+  color: green;
+}
+
+.sidebar nav a {
+  display: block;
+  padding: 12px;
+  color: #333;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  background: #34568B;
+  color: white;
+}
+
+.main {
+    margin-left: 220px; /* sama seperti lebar sidebar */
+
+  flex: 1;
+  padding: 30px;
+  background: #f6fbff;
+    min-height: 100vh;
+
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.topbar .user {
+  font-weight: 600;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.top-cards {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #4285b9;
+  color: white;
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 18px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  flex: 1;
+}
+
+.card.lightblue {
+  background: #4285b9;
+}
+
+.content-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.chart-container {
+  background: #28618c;
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+
+.chart-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.chart-wrapper canvas {
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.side-data {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.card.right {
+  background: #4285b9;
+  color: white;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.user-dropdown span {
+  font-weight: 600;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background-color: white;
+  min-width: 150px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 10px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f0f0f0;
+}
+
+/* Tambahan di atas */
+.toggle-btn {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: -240px;
+    top: 0;
+    height: 100vh;
+    width: 220px;
+    background: #d6e8f5;
+    z-index: 999;
+    transition: left 0.3s ease;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .main {
+    padding: 20px;
+    margin-left: 0;
+  }
+
+  .topbar {
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .toggle-btn {
+    display: inline-block;
+  }
+
+  .top-cards, .content-layout {
+    flex-direction: column;
+  }
+
+  .chart-container, .side-data, .card {
+    width: 100%;
+  }
+}
+
+/* Overlay untuk sidebar mobile */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0,0,0,0.3);
+  z-index: 998;
+}
+
+/* Tampilkan overlay ketika sidebar aktif */
+.sidebar.active + .overlay {
+  display: block;
+}

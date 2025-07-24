@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EulerGraphController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileUpdateController;
 use App\Http\Controllers\DashboardController;
@@ -40,6 +40,9 @@ Route::get('/pages/feature', function(){
 
 Route::get('/pages/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('pages.dashboard');
 
+Route::get('/pages/eulergraph', [EulerGraphController::class, 'index'])->middleware(['auth', 'verified'])->name('pages.eulergraph');
+
+
 Route::get('/pages/control', function () {
     return view('pages.control');
 })->middleware(['auth', 'verified'])->name('pages.control');
@@ -55,8 +58,8 @@ Route::get('/api/dashboard-data', function() {
     return response()->json($data);
 });
 
-
 Route::get('/pages/teskontrol', [KontrolController::class, 'index']);
+
 Route::post('/api/control',[KontrolController::class, 'update']);
 
 Route::get('/pages/datahistory', [DataHistoryController::class, 'datahistory'])
@@ -70,7 +73,7 @@ Route::get('/pages/camera', function(){
 
 Route::get('/camera-snapshot', function () {
     try {
-        $response = Http::timeout(2)->get('http://10.17.83.146:8080/?action=snapshot');
+        $response = Http::timeout(2)->get('http://10.17.83.146:8080/?action=snapshot'); //Alamat IP Raspberry Pi disesuaikan.
 
         return response($response->body(), 200)
             ->header('Content-Type', 'image/jpeg')

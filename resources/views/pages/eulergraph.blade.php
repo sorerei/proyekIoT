@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Monitoring Dashboard</title>
-  <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" />
+  <title>Euler Graph</title>
+  <link rel="stylesheet" href="{{ asset('css/eulergraph.css') }}" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -14,9 +14,9 @@
   <div class="sidebar" id="sidebar">
     <div class="logo">System Monitoring</div>
     <nav>
-      <a href="#" class="active">🏠 Dashboard</a>
+      <a href="{{ route('pages.dashboard') }}">🏠 Dashboard</a>
       <a href="{{ route('pages.datahistory') }}">📊 Riwayat Data</a>
-      <a href="{{ route('pages.eulergraph') }}">📈 Euler Graph</a>
+      <a href="#" class="active">📈 Euler Graph</a>
       <a  href="{{ route('pages.control') }}">📐 Kontrol</a>
       <a href="{{ route('pages.camera') }}">📷 Kamera</a>
 
@@ -40,10 +40,24 @@
       </div>
     </div>
 
-    <h1>Dashboard</h1>
+    <h1>Euler Graph</h1>
 
+    <div class="top-cards">
+      <div class="card dark">Data RPY<br>
+        <p>X (Raw) : <strong id="roll">{{ $data->roll ?? '-' }}</strong>, Y (Pitch) : <strong id="pitch">{{ $data->pitch ?? '-' }}</strong>,  Z (Yaw) : <strong id="yaw">{{ $data->yaw ?? '-' }}</strong></p>
+      </div>
+    </div>
+
+    <div class="side-data">
+      <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="sumbuChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <script src="{{ asset('js/dashboard.js') }}"></script>
+  <script src="{{ asset('js/eulergraph.js') }}"></script>
 </body>
 </html>

@@ -12,10 +12,10 @@
   <nav>
       <a href="{{ route('pages.dashboard') }}">🏠 Dashboard</a>
       <a href="#" class="active">📊 Riwayat Data</a>
+      <a href="{{ route('pages.eulergraph') }}">📈 Euler Graph</a>
       <a  href="{{ route('pages.control') }}">📐 Kontrol</a>
-            <a href="{{ route('pages.camera') }}">📷 Kamera</a>
-
-    </nav>
+      <a href="{{ route('pages.camera') }}">📷 Kamera</a>
+  </nav>
 </div>
 
 

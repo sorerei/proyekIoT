@@ -13,9 +13,9 @@
     <nav>
       <a href="{{ route('pages.dashboard') }}">🏠 Dashboard</a>
       <a href="{{ route('pages.datahistory') }}">📊 Riwayat Data</a>
-      <a href="{{ route('pages.control') }}">📐 Kontrol</a>
-            <a href="#" class="active">📷 Kamera</a>
-
+      <a href="{{ route('pages.eulergraph') }}">📈 Euler Graph</a>
+      <a  href="{{ route('pages.control') }}">📐 Kontrol</a>
+      <a href="#" class="active">📷 Kamera</a>
     </nav>
   </div>
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
