@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3D Control</title>
   <link rel="stylesheet" href="{{ asset('css/control.css') }}" />
   @vite(['resources/js/app.js'])
 
 </head>
+
 <body>
   <div class="sidebar" id="sidebar">
-    <div class="logo">System Monitoring</div>    
+    <div class="logo">System Monitoring</div>
     <nav>
       <a href="{{ route('pages.dashboard') }}">🏠 Dashboard</a>
       <a href="{{ route('pages.datahistory') }}">📊 Riwayat Data</a>
       <a href="{{ route('pages.eulergraph') }}">📈 Euler Graph</a>
-      <a  href="#" class="active">📐 Kontrol</a>
+      <a href="#" class="active">📐 Kontrol</a>
       <a href="{{ route('pages.camera') }}">📷 Kamera</a>
     </nav>
   </div>
@@ -26,7 +28,7 @@
     <!-- Topbar -->
     <div class="topbar">
 
-              <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+      <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
       <div class="user-dropdown" onclick="toggleDropdown()">
 
@@ -41,15 +43,16 @@
         </div>
       </div>
     </div>
-        <!-- Kontainer utama untuk model 3D dan kontrolnya -->
+    <!-- Kontainer utama untuk model 3D dan kontrolnya -->
     <div class="">
-        <!-- Kontainer model 3D dengan latar belakang gelap dan sudut membulat -->
-        <div class="kontrol-container">
-            <h2 class="">Model 3D</h2>
-            <!-- Elemen canvas untuk rendering 3D Three.js -->
-            <canvas id="sceneCanvas" class="model-canvas"></canvas>
-        </div>
+      <!-- Kontainer model 3D dengan latar belakang gelap dan sudut membulat -->
+      <div class="kontrol-container">
+        <h2 class="">Model 3D</h2>
+        <!-- Elemen canvas untuk rendering 3D Three.js -->
+        <canvas id="sceneCanvas" class="model-canvas"></canvas>
+      </div>
     </div>
     <script src="{{ asset('js/control.js') }}"></script>
 </body>
+
 </html>

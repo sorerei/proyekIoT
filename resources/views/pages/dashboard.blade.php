@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Monitoring Dashboard</title>
   <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
   <div class="layout">
 
@@ -17,7 +19,7 @@
       <a href="#" class="active">🏠 Dashboard</a>
       <a href="{{ route('pages.datahistory') }}">📊 Riwayat Data</a>
       <a href="{{ route('pages.eulergraph') }}">📈 Euler Graph</a>
-      <a  href="{{ route('pages.control') }}">📐 Kontrol</a>
+      <a href="{{ route('pages.control') }}">📐 Kontrol</a>
       <a href="{{ route('pages.camera') }}">📷 Kamera</a>
 
     </nav>
@@ -42,8 +44,9 @@
 
     <h1>Dashboard</h1>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <script src="{{ asset('js/dashboard.js') }}"></script>
+    <script src="{{ asset('js/dashboard.js') }}"></script>
 </body>
+
 </html>

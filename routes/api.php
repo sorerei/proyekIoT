@@ -22,12 +22,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/motor-control', function(Request $request){
+Route::get('/motor-control', function (Request $request) {
     $direction = $request->query('dir');
-    return response()->json(['status'=>'Motor bergerak ke $direction']);
+    return response()->json(['status' => 'Motor bergerak ke $direction']);
 });
 
-Route::post('/send-data', function(Request $request) {
+Route::post('/send-data', function (Request $request) {
     $data = SensorData::create([
         'roll' => $request->roll,
         'pitch' => $request->pitch,
@@ -44,7 +44,7 @@ Route::post('/send-data', function(Request $request) {
 });
 
 Route::get('/sumbu-chart-data', function () {
-    $data = SensorData::orderBy('created_at', 'desc')->take(20)->get(['created_at', 'roll', 'pitch', 'yaw', 'xmagnet', 'ymagnet', 'zmagnet','xaccel', 'yaccel', 'zaccel',])->reverse();
+    $data = SensorData::orderBy('created_at', 'desc')->take(20)->get(['created_at', 'roll', 'pitch', 'yaw', 'xmagnet', 'ymagnet', 'zmagnet', 'xaccel', 'yaccel', 'zaccel',])->reverse();
 
     return response()->json([
         'labels' => $data->pluck('created_at')->map(function ($time) {

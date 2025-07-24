@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Edit Profil</title>
   <link rel="stylesheet" href="{{ asset('css/editprofile.css') }}" />
 </head>
+
 <body>
   <div class="sidebar" id="sidebar">
-    <div class="logo">System Monitoring</div>    
+    <div class="logo">System Monitoring</div>
     <nav>
       <a href="{{ route('pages.dashboard') }}">🏠 Dashboard</a>
       <a href="{{ route('pages.datahistory') }}">📊 Riwayat Data</a>
       <a href="{{ route('pages.eulergraph') }}">📈 Euler Graph</a>
-      <a  href="{{ route('pages.control') }}">📐 Kontrol</a>
+      <a href="{{ route('pages.control') }}">📐 Kontrol</a>
       <a href="{{ route('pages.camera') }}">📷 Kamera</a>
     </nav>
   </div>
-    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+  <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
   <div class="main">
     <!-- Topbar with Dropdown -->
     <div class="topbar">
-                    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+      <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
       <div class="user-dropdown" onclick="toggleDropdown()">
         <span>Hallo! {{ Auth::user()->username }} 🌐 ▼</span>
@@ -43,10 +45,10 @@
         @csrf
 
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" value="{{ Auth::user()->username }}" readonly>
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" value="{{ Auth::user()->username }}" readonly>
         </div>
-        
+
         <div class="form-group">
           <label for="current_password">Password Saat Ini</label>
           <input type="password" id="current_password" name="current_password" required>
@@ -65,23 +67,24 @@
         <button type="submit" class="register-btn">Ubah Password</button>
 
         @if(session('success'))
-          <div class="alert-success">{{ session('success') }}</div>
-        @endif
+      <div class="alert-success">{{ session('success') }}</div>
+    @endif
 
         @if($errors->any())
-          <div class="alert-error">
-            <ul>
-              @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-              @endforeach
-            </ul>
-          </div>
-        @endif
+        <div class="alert-error">
+          <ul>
+          @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+          </ul>
+        </div>
+    @endif
       </form>
     </div>
   </div>
 
-<script src="{{ asset('js/editprofile.js') }}"></script>
+  <script src="{{ asset('js/editprofile.js') }}"></script>
 
 </body>
+
 </html>

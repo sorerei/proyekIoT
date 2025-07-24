@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register Page</title>
   <link rel="stylesheet" href="{{ asset('css/register.css') }}">
 </head>
+
 <body>
   <div class="register-container">
     <h2 class="title">Register Now!</h2>
@@ -19,23 +21,25 @@
 
       <!-- Username -->
       <div class="form-group">
-        <input type="text" name="username" value="{{ old('username') }}" placeholder="Username" required autocomplete="username">
+        <input type="text" name="username" value="{{ old('username') }}" placeholder="Username" required
+          autocomplete="username">
         @error('username')
-          <div class="input-error">{{ $message }}</div>
-        @enderror
+      <div class="input-error">{{ $message }}</div>
+    @enderror
       </div>
 
       <!-- Password -->
       <input type="password" name="password" placeholder="Password" required autocomplete="new-password">
       @error('password')
-        <div class="input-error">{{ $message }}</div>
-      @enderror
+      <div class="input-error">{{ $message }}</div>
+    @enderror
 
       <!-- Confirm Password -->
-      <input type="password" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
+      <input type="password" name="password_confirmation" placeholder="Confirm Password" required
+        autocomplete="new-password">
       @error('password_confirmation')
-        <div class="input-error">{{ $message }}</div>
-      @enderror
+      <div class="input-error">{{ $message }}</div>
+    @enderror
 
       <!-- Submit -->
       <button type="submit" class="register-btn">Create Account</button>
@@ -47,4 +51,5 @@
     </div>
   </div>
 </body>
+
 </html>

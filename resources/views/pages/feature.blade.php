@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Monitoring System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="{{ asset('css/feature.css') }}"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('css/feature.css') }}" />
 </head>
+
 <body>
   <header class="navbar">
     <div class="nav-container">
-          <h1 class="logo">Monitoring System</h1>
-          <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <h1 class="logo">Monitoring System</h1>
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
     </div>
     <nav id="nav-menu">
       <a href="{{ route('pages.home') }}">Home</a>
       <a href="#" class="active">Fitur</a>
       <a href="{{ route('pages.about') }}">Tentang Kami</a>
-          <a href="{{ route('login') }}" class="start-btn">Get Started</a>
+      <a href="{{ route('login') }}" class="start-btn">Get Started</a>
 
     </nav>
-            <a href="{{ route('login') }}" class="start-btn desktop">GET STARTED</a>  </header>
+    <a href="{{ route('login') }}" class="start-btn desktop">GET STARTED</a>
+  </header>
 
   <main class="main-content">
     <div class="star left"></div>
@@ -36,7 +39,8 @@
         <p>Lihat kecepatan rotasi dan posisi secara langsung lewat grafik dinamis.</p>
       </div>
       <div class="feature-card animate" style="animation-delay: 0.2s;">History Log Otomatis
-        <p>Setiap sesi pemantauan akan otomatis tersimpan. Riwayat data memudahkan untuk analisis lebih lanjut evaluasi performa sistem.</p>
+        <p>Setiap sesi pemantauan akan otomatis tersimpan. Riwayat data memudahkan untuk analisis lebih lanjut evaluasi
+          performa sistem.</p>
       </div>
       <div class="feature-card animate" style="animation-delay: 0.3s;">Monitoring Kecepatan Rotasi (RPM)
         <p>Pantau kecepatan putaran motor secara real-time dalam satuan RPM</p>
@@ -50,4 +54,5 @@
 
   <div class="circle-decor"></div>
 </body>
+
 </html>
