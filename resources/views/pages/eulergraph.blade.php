@@ -45,6 +45,13 @@
 
         <h1>Euler Graph</h1>
 
+        <div class="camera">
+            <div style="position: relative; width: 100%; max-width: 640px;">
+                <img id="imgA" style="position: absolute; width: 100%;" />
+                <img id="imgB" style="position: absolute; width: 100%;" />
+            </div>
+        </div>
+
         <div class="top-cards">
             <div class="card dark">Data RPY<br>
                 <p>X (Raw) : <strong id="roll">{{ $data->roll ?? '-' }}</strong>, Y (Pitch) : <strong

@@ -243,3 +243,22 @@ h1 {
 .sidebar.active + .overlay {
   display: block;
 }
+
+/* Styling untuk Konten Kamera */
+.camera {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 200px;
+}
+
+.camera img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 80vh; /* Batas tinggi untuk menghindari gambar terlalu besar */
+  object-fit: cover; /* Memastikan gambar mengisi area tanpa mengubah rasio */
+  border-radius: 10px;
+}
