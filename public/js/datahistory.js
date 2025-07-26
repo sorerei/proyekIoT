@@ -26,8 +26,14 @@ function closeSidebar() {
   overlay.style.display = "none";
 }
 
+function isDisplayPaused() {
+  // Ambil status pause dari localStorage, default false (tidak pause)
+  return localStorage.getItem('displayPaused') === 'true';
+}
+
 $(document).ready(function() {
   function refreshTable() {
+    if (isDisplayPaused()) return;
     $.get(window.location.href, function(response) {
       // Ambil isi tabel dari response HTML
       const newTable = $(response).find('.table-container').html();
@@ -35,5 +41,5 @@ $(document).ready(function() {
     });
   }
 
-  setInterval(refreshTable, 0.5); // Refresh tiap 0.5 detik
+  setInterval(refreshTable, 500); // Refresh tiap 0.5 detik
 });

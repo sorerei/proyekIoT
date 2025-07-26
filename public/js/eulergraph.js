@@ -265,23 +265,49 @@ function renderSumbu2Chart(data) {
   });
 }
 
+function isDisplayPaused() {
+  // Ambil status pause dari localStorage, default false (tidak pause)
+  return localStorage.getItem('displayPaused') === 'true';
+}
 
+let lastSumbuChartData = null;
+let chartInitialized = false;
 
 function loadSumbuChartData() {
   fetch('/api/sumbu-chart-data')
     .then(response => response.json())
-    .then(data => {renderSumbuChart(data);       
-      renderSumbu1Chart(data);
-      renderSumbu2Chart(data);});
+    .then(data => {
+      lastSumbuChartData = data;
+      // Render sekali saja saat pertama kali agar chart tidak hilang saat pause
+      if (!chartInitialized) {
+        renderSumbuChart(data);
+        renderSumbu1Chart(data);
+        renderSumbu2Chart(data);
+        chartInitialized = true;
+        return;
+      }
+      // Saat tidak pause, update chart dengan data terbaru
+      if (!isDisplayPaused()) {
+        renderSumbuChart(data);
+        renderSumbu1Chart(data);
+        renderSumbu2Chart(data);
+      }
+      // Saat pause, JANGAN update chart (biarkan tampil data terakhir)
+    });
 }
 
+// Jika user menekan "lanjutkan" setelah pause, tampilkan data terbaru yang sudah diterima
+window.addEventListener('storage', function(e) {
+  if (e.key === 'displayPaused' && e.newValue === 'false' && lastSumbuChartData) {
+    renderSumbuChart(lastSumbuChartData);
+    renderSumbu1Chart(lastSumbuChartData);
+    renderSumbu2Chart(lastSumbuChartData);
+  }
+});
 
-// ===================
-// Fetch Realtime Data
-// ===================
 function fetchData() {
   $.get('/api/dashboard-data', function(data) {
-    if (data) {
+    if (data && !isDisplayPaused()) {
       $('#roll').text(data.roll ?? '-');
       $('#pitch').text(data.pitch ?? '-');
       $('#yaw').text(data.yaw ?? '-');
@@ -304,7 +330,11 @@ function fetchData() {
 }
 
 loadSumbuChartData();
-setInterval(loadSumbuChartData, 500);
+setInterval(() => {
+  if (!isDisplayPaused()) {
+    loadSumbuChartData();
+  }
+}, 500);
 
 fetchData();
 setInterval(fetchData, 500);

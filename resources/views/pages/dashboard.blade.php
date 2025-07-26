@@ -26,7 +26,6 @@
   </div>
   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-
   <div class="main">
     <div class="topbar">
       <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
@@ -43,6 +42,10 @@
     </div>
 
     <h1>Dashboard</h1>
+
+    <div style="margin-bottom:16px;">
+      <button id="toggle-data-btn" class="btn btn-warning">Matikan Data</button>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
