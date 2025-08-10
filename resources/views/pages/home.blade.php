@@ -33,21 +33,24 @@
     <section class="content">
       <div class="text-area">
         <h2>Selamat Datang di Sistem Monitoring <br><span>Air Bearing Controller</span></h2>
-        <h3>Sistem Monitoring Air Bearing Berbasis ESP32</h3>
-        <p class="desc">Kami dari SABER mengembangkan sistem air bearing untuk rotasi satu sumbu (X, Y, atau Z) tanpa
-          gesekan langsung.
-          Didukung oleh ESP32, alat ini bisa dikontrol dan dipantau lewat jaringan lokal (IntraNet) dan antarmuka web
-          yang sederhana dan responsif.</p>
+        <h3>Simulator Sistem Kendali Altitude Satelit dengan Air Bearing</h3>
+        <p class="desc">Kami dari SABER mengembangkan sistem monitoring simulator Kendali
+          altitude satelit 3 sumbu (x, y, z) dengan air bearing. Didukung oleh ESP32 dan beberapa 
+          sistem kontroller tertanam lainnya, memungkinkan aplikasi ini untuk memonitor, menampilkan 
+          tangkapan video kamera dan mengontrol pergerakan platform satelit secara real-time.</p>
 
         <div class="feature-box">
           <p><strong>Apa yang Bisa Dilakukan Sistem Ini?</strong></p>
           <ul>
-            <li>✅ Rotasi satu sumbu dengan gerakan halus dan stabil</li>
-            <li>✅ Monitoring kecepatan dan posisi secara real-time</li>
+            <li>✅ Memvisualisasikan gerak rotasi di 3 sumbu satelit (Roll(x), Pitch(y), dan Yaw(z))</li>
+            <li>✅ Mengontrol posisi dan kecepatan sudut satelit di satu sumbu (Yaw(z)) menggunakan aktuator reaction wheel</li>
             <li>✅ Kontrol penuh lewat jaringan lokal tanpa internet</li>
             <li>✅ Akses mudah lewat web browser dari PC, laptop, atau HP</li>
           </ul>
         </div>
+        <p class="desc">Simulator kendali altitude satelit ini dibuat untuk mensimulasikan dan memvisualisasikan
+          pergerakan rotasi satelit di orbit, untuk tujuan pembelajaran dan riset sistem Altitude Determination
+          and Control Satellite (ADCS) sebagai salah satu sub-sistem terpenting dari sebuah sistem satelit.</p>
 
         <button class="start-btn" onclick="window.location.href='{{ route('login') }}'">GET STARTED!</button>
       </div>
