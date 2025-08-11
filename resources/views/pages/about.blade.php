@@ -31,13 +31,13 @@
     <h2 class="title">Tentang Kami</h2>
     <p class="desc animate">
       <b><i>SABER</i></b> adalah singkatan dari <b><i>Satelit Beraksi</i></b>, tim mahasiswa yang bergerak di bidang
-      pengembangan teknologi berbasis <i>Internet Of Things</i>. Fokus utama tim ini adalah membangun sistem kontrol dan
+      pengembangan teknologi berbasis <i>Internet Of Things</i>. Fokus utama tim ini adalah membangun sistem
       monitoring untuk kebutuhan simulasi satelit skala kecil.
     </p>
     <p class="desc animate delay">
-      Proyek utama saat ini adalah sistem pengendali rotasi satu sumbu berbasis air bearing yang menggunakan
-      mikrokontroler ESP32. Sistem ini dirancang untuk meminimalkan gesekan antar penyangga dan memungkinkan simulasi
-      gerakan satelit secara lebih presisi.
+      Proyek utama saat ini adalah sistem monitoring tiga sumbu berbasis air bearing yang menggunakan
+      mikrokontroler ESP32. Sistem ini dirancang untuk monitoring altitude satelit 3 sumbu (x, y, z) dan memungkinkan simulasi
+      gerakan rotasi di 3 sumbu satelit secara visual.
     </p>
   </main>
   <div class="decor circle"></div>
