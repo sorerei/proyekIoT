@@ -32,18 +32,12 @@
     <h2 class="title">Fitur Utama</h2>
 
     <div class="features">
-      <div class="feature-card animate">Rotasi Sumbu X
-        <p>Tinggal pilih sumbu yang ingin dikendalikan sesuai kebutuhan.</p>
-      </div>
       <div class="feature-card active animate" style="animation-delay: 0.1s;">Monitoring Data Gerak
-        <p>Lihat kecepatan rotasi dan posisi secara langsung lewat grafik dinamis.</p>
+        <p>Lihat gerak sumbu rotasi di 3 sumbu satelit (Roll(x), Pitch(y), dan Yaw(z)).</p>
       </div>
       <div class="feature-card animate" style="animation-delay: 0.2s;">History Log Otomatis
         <p>Setiap sesi pemantauan akan otomatis tersimpan. Riwayat data memudahkan untuk analisis lebih lanjut evaluasi
           performa sistem.</p>
-      </div>
-      <div class="feature-card animate" style="animation-delay: 0.3s;">Monitoring Kecepatan Rotasi (RPM)
-        <p>Pantau kecepatan putaran motor secara real-time dalam satuan RPM</p>
       </div>
       <div class="feature-card animate" style="animation-delay: 0.4s;">Status Sistem Secara Real Time
         <p>Lihat status terkini sistem secara langsung</p>
