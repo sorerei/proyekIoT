@@ -45,11 +45,11 @@
 
     <div style="margin-bottom:16px;">
       <button id="toggle-data-btn" class="btn btn-warning">Matikan Data</button>
+      <button id="fetch-once-btn" class="btn btn-info" style="display:none;">Ambil Data Sekali</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src="{{ asset('js/dashboard.js') }}"></script>
 </body>
-
 </html>

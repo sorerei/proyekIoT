@@ -34,16 +34,47 @@ let displayPaused = localStorage.getItem('displayPaused') === 'true';
 function setDisplayPaused(status) {
   displayPaused = status;
   localStorage.setItem('displayPaused', status ? 'true' : 'false');
-  $('#toggle-data-btn').text(status ? 'Lanjutkan Data' : 'Pause Data');
+  $('#toggle-data-btn').text(status ? 'Lanjutkan Data' : 'Matikan Data');
   $('#toggle-data-btn').toggleClass('btn-warning', !status);
   $('#toggle-data-btn').toggleClass('btn-success', status);
+  // Tampilkan tombol "Ambil Data Sekali" hanya saat pause
+  $('#fetch-once-btn').toggle(displayPaused);
 }
 
 $('#toggle-data-btn').on('click', function() {
   setDisplayPaused(!displayPaused);
 });
 
+$('#fetch-once-btn').on('click', function() {
+  // Ambil data sekali dan tampilkan
+  fetchData(true);
+});
+
 $(document).ready(function() {
   setDisplayPaused(displayPaused);
 });
+
+// Modifikasi fetchData agar bisa dipanggil sekali saat pause
+function fetchData(force = false) {
+  if (displayPaused && !force) return;
+  $.get('/api/dashboard-data', function(data) {
+    if (data) {
+      $('#roll').text(data.roll ?? '-');
+      $('#pitch').text(data.pitch ?? '-');
+      $('#yaw').text(data.yaw ?? '-');
+      $('#xmagnet').text(data.xmagnet ?? '-');
+      $('#ymagnet').text(data.ymagnet ?? '-');
+      $('#zmagnet').text(data.zmagnet ?? '-');
+      $('#xaccel').text(data.xaccel ?? '-');
+      $('#yaccel').text(data.yaccel ?? '-');
+      $('#zaccel').text(data.zaccel ?? '-');
+      // Update chart jika ada
+    }
+  });
+}
+
+// Interval pengambilan data otomatis
+setInterval(function() {
+  fetchData();
+}, 500);
 
