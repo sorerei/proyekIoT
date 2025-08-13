@@ -33,12 +33,29 @@ function isDisplayPaused() {
 
 $(document).ready(function() {
   function refreshTable() {
-    if (isDisplayPaused()) return;
+    if (isDisplayPaused()) {
+      // Saat pause, tampilkan data terakhir dari localStorage (jika ada)
+      const saved = localStorage.getItem('lastHistoryTable');
+      if (saved) {
+        $('.table-container').html(saved);
+      }
+      return;
+    }
     $.get(window.location.href, function(response) {
       // Ambil isi tabel dari response HTML
       const newTable = $(response).find('.table-container').html();
       $('.table-container').html(newTable);
+      // Simpan data terakhir ke localStorage
+      localStorage.setItem('lastHistoryTable', newTable);
     });
+  }
+
+  // OPTIMALISASI: Saat halaman di-refresh dan pause, langsung tampilkan data terakhir sebelum interval berjalan
+  if (isDisplayPaused()) {
+    const saved = localStorage.getItem('lastHistoryTable');
+    if (saved) {
+      $('.table-container').html(saved);
+    }
   }
 
   setInterval(refreshTable, 500); // Refresh tiap 0.5 detik

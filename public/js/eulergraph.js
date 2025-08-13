@@ -273,12 +273,33 @@ function isDisplayPaused() {
 let lastSumbuChartData = null;
 let chartInitialized = false;
 
+function saveChartDataToStorage(data) {
+  localStorage.setItem('lastSumbuChartData', JSON.stringify(data));
+}
+
+function loadChartDataFromStorage() {
+  const saved = localStorage.getItem('lastSumbuChartData');
+  return saved ? JSON.parse(saved) : null;
+}
+
 function loadSumbuChartData() {
+  // Jika pause, jangan ambil data baru, tampilkan data terakhir dari localStorage
+  if (isDisplayPaused()) {
+    const lastData = loadChartDataFromStorage();
+    if (lastData) {
+      renderSumbuChart(lastData);
+      renderSumbu1Chart(lastData);
+      renderSumbu2Chart(lastData);
+      chartInitialized = true;
+    }
+    return;
+  }
+  // Jika tidak pause, ambil data baru dari server
   fetch('/api/sumbu-chart-data')
     .then(response => response.json())
     .then(data => {
       lastSumbuChartData = data;
-      // Render sekali saja saat pertama kali agar chart tidak hilang saat pause
+      saveChartDataToStorage(data);
       if (!chartInitialized) {
         renderSumbuChart(data);
         renderSumbu1Chart(data);
@@ -286,58 +307,72 @@ function loadSumbuChartData() {
         chartInitialized = true;
         return;
       }
-      // Saat tidak pause, update chart dengan data terbaru
-      if (!isDisplayPaused()) {
-        renderSumbuChart(data);
-        renderSumbu1Chart(data);
-        renderSumbu2Chart(data);
-      }
-      // Saat pause, JANGAN update chart (biarkan tampil data terakhir)
+      renderSumbuChart(data);
+      renderSumbu1Chart(data);
+      renderSumbu2Chart(data);
     });
 }
 
 // Jika user menekan "lanjutkan" setelah pause, tampilkan data terbaru yang sudah diterima
 window.addEventListener('storage', function(e) {
-  if (e.key === 'displayPaused' && e.newValue === 'false' && lastSumbuChartData) {
-    renderSumbuChart(lastSumbuChartData);
-    renderSumbu1Chart(lastSumbuChartData);
-    renderSumbu2Chart(lastSumbuChartData);
+  if (e.key === 'displayPaused' && e.newValue === 'false') {
+    loadSumbuChartData();
   }
 });
 
-function fetchData() {
+// Inisialisasi grafik saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function() {
+  loadSumbuChartData();
+});
+
+// Interval pengambilan data otomatis
+let chartInterval = null;
+function startChartInterval() {
+  if (chartInterval) clearInterval(chartInterval);
+  chartInterval = setInterval(() => {
+    loadSumbuChartData();
+  }, 500);
+}
+startChartInterval();
+
+function showRPYData(data) {
+  $('#roll').text(data.roll ?? '-');
+  $('#pitch').text(data.pitch ?? '-');
+  $('#yaw').text(data.yaw ?? '-');
+  // Simpan data terakhir ke localStorage
+  localStorage.setItem('lastRPYData', JSON.stringify(data));
+}
+
+function fetchRPYData(force = false) {
+  if (isDisplayPaused() && !force) return;
   $.get('/api/dashboard-data', function(data) {
-    if (data && !isDisplayPaused()) {
-      $('#roll').text(data.roll ?? '-');
-      $('#pitch').text(data.pitch ?? '-');
-      $('#yaw').text(data.yaw ?? '-');
-      
-      $('#xmagnet').text(data.xmagnet ?? '-');
-      $('#ymagnet').text(data.ymagnet ?? '-');
-      $('#zmagnet').text(data.zmagnet ?? '-');
-
-      $('#xaccel').text(data.xaccel ?? '-');
-      $('#yaccel').text(data.yaccel ?? '-');
-      $('#zaccel').text(data.zaccel ?? '-');
-
-      // Update chart dengan 50 data historis
-      const labels = data.history.map(item => item.created_at);
-      const rollData = data.history.map(item => item.roll);
-      const pitchData = data.history.map(item => item.pitch);
-      const yawData = data.history.map(item => item.yaw);
+    if (data) {
+      showRPYData(data);
     }
   });
 }
 
-loadSumbuChartData();
-setInterval(() => {
-  if (!isDisplayPaused()) {
-    loadSumbuChartData();
+// Saat halaman di-refresh dan kondisi pause, tampilkan data terakhir dari localStorage
+$(document).ready(function() {
+  if (isDisplayPaused()) {
+    const saved = localStorage.getItem('lastRPYData');
+    if (saved) {
+      showRPYData(JSON.parse(saved));
+    }
+  } else {
+    fetchRPYData();
   }
-}, 500);
+});
 
-fetchData();
-setInterval(fetchData, 500);
+// Interval pengambilan data otomatis
+let rpyInterval = null;
+function startRPYInterval() {
+  if (rpyInterval) clearInterval(rpyInterval);
+  rpyInterval = setInterval(function() {
+    fetchRPYData();
+  }, 500);
+}
+startRPYInterval();
 
 // =================== 
 // Camera Stream Preload and Swap
