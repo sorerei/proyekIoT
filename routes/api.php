@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
 use App\Models\SensorData;
 use App\Http\Controllers\SensorDataController;
 
@@ -60,6 +61,25 @@ Route::get('/sumbu-chart-data', function () {
 
         'xaccel' => $data->pluck('xaccel'),
         'yaccel' => $data->pluck('yaccel'),
-        'zaccel' => $data->pluck('zaccel')
+        'zaccel' => $data->pluck('zaccel'),
+    ]); 
+});
+
+Route::post('/send-command', function(Request $request){
+    $validated = $request->validate([
+        'command' => 'required|string|max:20',
     ]);
+
+    Cache::put('latest_command', $validated['command'], 
+    now()->addMinutes(5));
+
+    return response()->json([
+        'message' => 'Command sent successfully', 
+        'command' => $validated['command']
+    ]);
+});
+
+Route::get('/razor-command', function(){
+    $command = Cache::pull('latest_command', '');
+    return response($command, 200);
 });
