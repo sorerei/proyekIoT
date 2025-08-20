@@ -15,7 +15,7 @@
       <a href="{{ route('pages.dashboard') }}">🏠 Dashboard</a>
       <a href="{{ route('pages.datahistory') }}">📊 Riwayat Data</a>
       <a href="{{ route('pages.eulergraph') }}">📈 Euler Graph</a>
-      <a href="{{ route('pages.control') }}">📐 Kontrol</a>
+      <a href="{{ route('pages.model') }}">🛰️ 3D Model</a>
       <a href="{{ route('pages.camera') }}">📷 Kamera</a>
     </nav>
   </div>

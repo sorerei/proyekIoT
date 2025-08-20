@@ -1,4 +1,4 @@
-    function toggleDropdown() {
+function toggleDropdown() {
       document.querySelector('.user-dropdown').classList.toggle('active');
     }
 
@@ -37,13 +37,45 @@ const canvas = document.getElementById('sceneCanvas');
 const scene  = new THREE.Scene();
 scene.background = new THREE.Color("#f4faff");
 
+// Tambahkan sumbu global (tetap) dengan label dan warna berbeda
+const axesHelper = new THREE.AxesHelper(1.5);
+scene.add(axesHelper);
+
+// Tambahkan label untuk sumbu global
+function createAxisLabel(text, color) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 32;
+  const ctx = canvas.getContext('2d');
+  ctx.font = 'bold 24px Arial';
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+  const texture = new THREE.CanvasTexture(canvas);
+  const material = new THREE.SpriteMaterial({ map: texture, depthTest: false });
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(0.5, 0.125, 1);
+  return sprite;
+}
+
+// Label untuk sumbu global
+const labelX = createAxisLabel('Y', '#ff0000');
+const labelY = createAxisLabel('X', '#00ff00');
+const labelZ = createAxisLabel('Z', '#0000ff');
+labelX.position.set(1.6, 0, 0);
+labelY.position.set(0, 1.6, 0);
+labelZ.position.set(0, 0, 1.6);
+scene.add(labelX, labelY, labelZ);
+
 const camera = new THREE.PerspectiveCamera(
   45,
   canvas.clientWidth / canvas.clientHeight,
   0.1,
   1000
 );
-camera.position.set(0, 1, 5);
+// Atur posisi kamera agar default zoom seperti gambar kedua
+camera.position.set(0, 1, 8); // sebelumnya 0, 1, 5
 
 /* ------------------------------ RENDERER */
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -64,6 +96,8 @@ controls.minDistance     = 2;
 controls.maxDistance     = 10;
 controls.minPolarAngle = 0;
 controls.maxPolarAngle   = Math.PI;
+//controls.enableRotate = true;
+
 
 /* ------------------------------ LOAD MODEL */
 let model = null;
@@ -72,25 +106,55 @@ const loader = new GLTFLoader();
 loader.load('/models/3DAlat.glb', function (gltf)  {
   model = gltf.scene;
 
-  // Atur skala mirror terhadap Y agar orientasi cocok
   model.scale.set(1, 1, 1);
 
-  // Reset rotasi agar tidak ada tambahan rotasi membingungkan
-  model.rotation.set(0, 0, 0);
-  
-    model.traverse(child => {
+  // Atur posisi dan rotasi default model sesuai permintaan:
+  // X = 90°, Y = 180°, Z = 180°
+  model.position.set(0, 0, 0);
+  model.rotation.set(
+    THREE.MathUtils.degToRad(90),   // X = 90°
+    THREE.MathUtils.degToRad(180),  // Y = 180°
+    THREE.MathUtils.degToRad(180)   // Z = 180°
+  );
+
+  model.traverse(child => {
     if (child.isMesh) {
-      child.castShadow = false;         // Jika tidak perlu bayangan
+      child.castShadow = false;
       child.receiveShadow = false;
-      child.frustumCulled = true;       // Render hanya jika di dalam view kamera
-      child.geometry.computeBoundingSphere(); // Optional: bantu culling lebih akurat
+      child.frustumCulled = true;
+      child.geometry.computeBoundingSphere();
     }
   });
-  
+
+  // Tambahkan sumbu lokal (bergerak) dengan warna berbeda
+  const localAxesHelper = new THREE.AxesHelper(1.2);
+  localAxesHelper.setColors(
+    new THREE.Color('#ffaaaa'), // X' lebih muda
+    new THREE.Color('#aaffaa'), // Y' lebih muda
+    new THREE.Color('#aaaaff')  // Z' lebih muda
+  );
+  model.add(localAxesHelper);
+
+  // Label untuk sumbu lokal
+  const labelXl = createAxisLabel("Y'", '#ffaaaa');
+  const labelYl = createAxisLabel("Z'", '#aaffaa');
+  const labelZl = createAxisLabel("X'", '#aaaaff');
+  labelXl.position.set(1.3, 0, 0);
+  labelYl.position.set(0, 1.3, 0);
+  labelZl.position.set(0, 0, 1.3);
+  model.add(labelXl, labelYl, labelZl);
+
   scene.add(model);
 }, undefined, error => {
   console.error('GLB load error:', error);
 });
+
+// Pastikan juga targetRotation diinisialisasi sama:
+let targetRotation = {
+  x: THREE.MathUtils.degToRad(90),
+  y: THREE.MathUtils.degToRad(180),
+  z: THREE.MathUtils.degToRad(180)
+};
 
 setInterval(updateModelFromAPI, 1000); // fetch setiap 1 detik
 
@@ -114,8 +178,6 @@ document.querySelectorAll('.btn').forEach(btn => {
     saveState(model);
   });
 });
-
-let targetRotation = { x: 0, y: 0, z: 0 };
 
 function updateModelFromAPI() {
   if (!model) return;
@@ -147,7 +209,7 @@ const clock = new THREE.Clock();
 
 function animate() {
   requestAnimationFrame(animate);
-    const delta = clock.getDelta(); // waktu antar frame (dalam detik)
+  const delta = clock.getDelta(); // waktu antar frame (dalam detik)
 
 
    // Interpolasi rotasi agar smooth
@@ -158,6 +220,13 @@ function animate() {
     model.rotation.z += (targetRotation.z - model.rotation.z) * lerpFactor;
   }
 
+  // Update rotasi legend lokal agar selalu sama dengan model
+  if (scene.userData.localLegendGroup && model) {
+    scene.userData.localLegendGroup.rotation.x = model.rotation.x;
+    scene.userData.localLegendGroup.rotation.y = model.rotation.y;
+    scene.userData.localLegendGroup.rotation.z = model.rotation.z;
+  }
+
   controls.update();
   renderer.render(scene, camera);
   
@@ -166,7 +235,58 @@ animate();
 
 /* ------------------------------ RESPONSIVE */
 window.addEventListener('resize', () => {
-  camera.aspect = canvas.clientWidth / canvas.clientHeight;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+  renderer.setSize(width, height, false);
 });
+
+// Tambahkan legend gabungan sumbu global (XYZ) dan lokal (X'Y'Z') di pojok kiri atas, TANPA offset
+function addCombinedLegendAxes(position = {x: -2, y: 2, z: 0}) {
+  const legendGroup = new THREE.Group();
+
+  // Sumbu legend global (besar)
+  const legendAxes = new THREE.AxesHelper(0.6);
+  legendGroup.add(legendAxes);
+
+  // Label legend global
+  const lx = createAxisLabel('Y', '#ff0000');
+  const ly = createAxisLabel('X', '#00ff00');
+  const lz = createAxisLabel('Z', '#0000ff');
+  lx.position.set(0.7, 0, 0);
+  ly.position.set(0, 0.7, 0);
+  lz.position.set(0, 0, 0.7);
+  legendGroup.add(lx, ly, lz);
+
+  // Sumbu legend lokal (x'y'z') TANPA offset, tepat di tengah legend global
+  const localLegendGroup = new THREE.Group();
+  const localLegendAxes = new THREE.AxesHelper(0.4);
+  localLegendAxes.setColors(
+    new THREE.Color('#ffaaaa'), // X'
+    new THREE.Color('#aaffaa'), // Y'
+    new THREE.Color('#aaaaff')  // Z'
+  );
+  localLegendGroup.add(localLegendAxes);
+
+  // Label legend lokal (tanpa offset, tumpuk di tengah)
+  const lx2 = createAxisLabel("Y'", '#ffaaaa');
+  const ly2 = createAxisLabel("Z'", '#aaffaa');
+  const lz2 = createAxisLabel("X'", '#aaaaff');
+  lx2.position.set(0.5, 0, 0);
+  ly2.position.set(0, 0.5, 0);
+  lz2.position.set(0, 0, 0.5);
+  localLegendGroup.add(lx2, ly2, lz2);
+
+  // Gabungkan group lokal ke legend utama TANPA offset
+  legendGroup.add(localLegendGroup);
+
+  // Tempatkan di pojok kiri atas (atau posisi lain sesuai kebutuhan)
+  legendGroup.position.set(position.x, position.y, position.z);
+
+  // Simpan referensi group lokal agar bisa diupdate rotasinya
+  scene.userData.localLegendGroup = localLegendGroup;
+
+  scene.add(legendGroup);
+}
+addCombinedLegendAxes({x: -2, y: 2, z: 0});

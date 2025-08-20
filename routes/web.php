@@ -43,9 +43,9 @@ Route::get('/pages/dashboard', [DashboardController::class, 'index'])->middlewar
 Route::get('/pages/eulergraph', [EulerGraphController::class, 'index'])->middleware(['auth', 'verified'])->name('pages.eulergraph');
 
 
-Route::get('/pages/control', function () {
-    return view('pages.control');
-})->middleware(['auth', 'verified'])->name('pages.control');
+Route::get('/pages/model', function () {
+    return view('pages.model');
+})->middleware(['auth', 'verified'])->name('pages.model');
 
 
 Route::middleware(['auth'])->group(function () {
